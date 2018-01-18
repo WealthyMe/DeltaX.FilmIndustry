@@ -34,9 +34,10 @@
     </table>
   </div>
 </div>
+<hr />
 
-<div class="row"  id="addEditMovieData">
-  <div  class="col-md-12" *ngIf="isVisible">
+<div class="row" id="addEditMovieData">
+  <div class="col-md-12" *ngIf="isVisible">
     <app-add-edit-movie [movie]="movieToEdit" (savedNotification)="updateMoviesList($event)"></app-add-edit-movie>
   </div>
 </div>
