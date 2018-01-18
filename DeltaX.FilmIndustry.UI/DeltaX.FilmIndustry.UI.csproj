@@ -227,6 +227,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\01.dbo.Genders.Table.sql" />
+    <Content Include="App_Data\02.dbo.CrewCastRoles.Table.sql" />
+    <Content Include="App_Data\03.dbo.Images.Table.sql" />
+    <Content Include="App_Data\04.dbo.Persons.Table.sql" />
+    <Content Include="App_Data\05.dbo.Movies.Table.sql" />
+    <Content Include="App_Data\06.dbo.MoviesCrewCast.Table.sql" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="clientScripts\inline.bundle.js" />
     <Content Include="clientScripts\main.bundle.js" />
@@ -309,7 +315,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -326,7 +334,6 @@
     <Content Include="Views\Start\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="FilmIndustryClient\src\app\Image\Components\" />
   </ItemGroup>
   <ItemGroup>

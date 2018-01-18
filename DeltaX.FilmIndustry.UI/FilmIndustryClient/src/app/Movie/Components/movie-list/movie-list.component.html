@@ -32,6 +32,10 @@
         </tr>
       </tbody>
     </table>
+    <div class="alert alert-info" *ngIf="!(movies && movies.length > 0)">
+      No Movies Found...!!<br />
+      You can add movie by clicking on the "Add New Movie" button displayed above
+    </div>
   </div>
 </div>
 <hr />
