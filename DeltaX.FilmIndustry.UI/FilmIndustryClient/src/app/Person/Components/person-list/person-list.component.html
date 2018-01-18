@@ -1,0 +1,22 @@
+<table *ngIf="persons.length > 0">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Date Of Birth</th>
+      <th>Biography</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let person of persons;">
+      <td>{{person.PersonID}}</td>
+      <td>{{person.Name}}</td>
+      <td>{{person.DOB}}</td>
+      <td>
+        <p>{{person.Bio}}</p>
+      </td>
+      <td><a  href="javascript:void(0)" (click)="removePersonNotifier(person)"><span class="glyphicon glyphicon-remove" ></span></a></td>
+    </tr>
+  </tbody>
+</table>

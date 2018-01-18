@@ -1,0 +1,59 @@
+<h1 style="padding: 10px 0px 0px 25px;">{{title}}</h1>
+<hr />
+<form #form="ngForm" (ngSubmit)="SubmitForm();" class="form-horizontal padding30px">
+  <div class="form-group" *ngIf="person.PersonID">
+    <div class="col-md-3">
+      <label class="">Id</label>
+    </div>
+    <div class="col-md-9">
+      {{person.PersonID}}
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-3">
+      <label class="">Name</label> 
+    </div>
+    <div class="col-md-9">
+      <input type="text" class="form-control form-control-extension" name="name" [(ngModel)]="person.Name">
+      <div class="alert alert-danger" *ngIf="person.Name==null || person.Name.trim() == ''">How can we identify this Actor/Producer without his/her name..?</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-3">
+      <label class="">Gender</label>
+    </div>
+    <div class="col-md-9">
+      <app-dropdown [dropdownValues]="genderDropdownList" [dropdownClass]="btn-primary"
+                    (selectedValue)="UpdateGenderSelection($event)" [defaultSelectedId]="person.Gender?.GenderID"></app-dropdown>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-3">
+      <label class="">Date Of Birth</label>
+    </div>
+    <div class="col-md-9">
+      <input type="date" class="form-control form-control-extension" name="dateOfBirth" [(ngModel)]="person.DOB">
+      <div class="alert alert-danger" *ngIf="this.person.DOB == null || this.person.DOB.toString() == ''">Please select the Actor's/Producer's Date of birth.</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-3">
+      <label class="">Biography</label>
+    </div>
+    <div class="col-md-9">
+      <textarea class="form-control form-control-extension" rows="4" name="bio" [(ngModel)]="person.Bio"></textarea>
+    </div>
+  </div>
+  <div class="form-group">
+
+    <div class="col-md-offset-3 col-md-2">
+      <button type="submit" [disabled]="isFormInvalid() || isSubmitted" class="btn btn-lg btn-outline-success">Add</button>
+    </div>
+    <div class="col-md-2">
+      <button type="button" (click) ="cancelAction()" class="btn btn-lg btn-outline-warning">Cancel</button>
+    </div>
+  </div>
+
+</form>
+
+<app-alert-inline [alertDetails]="alertInfo"></app-alert-inline>

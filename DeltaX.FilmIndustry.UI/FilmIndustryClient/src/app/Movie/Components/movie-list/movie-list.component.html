@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-12">
+    <button scrollTo scrollTargetSelector="#addEditMovieData" class="pull-left btn btn-lg btn-outline-success" (click)="addEditMovieNotifier(null)">Add New Movie</button>
+  </div>
+</div>
+<hr />
+<div class="row">
+  <div class="col-md-12">
+    <table *ngIf="movies && movies.length > 0">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Year Of Release</th>
+          <th>Producer</th>
+          <th>Actors</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let movie of movies;">
+          <td>{{movie.MovieId}}</td>
+          <td>{{movie.Name}}</td>
+          <td>{{movie.YearOfRelease}}</td>
+          <td>
+            <p>{{movie.Producer.Name}}</p>
+          </td>
+          <td class="maxWidth250px">
+            {{displayActorsName(movie.Actors)}}
+          </td>
+          <td><a scrollTo scrollTargetSelector="#addEditMovieData" href="javascript:void(0)" (click)="addEditMovieNotifier(movie)"><span class="success glyphicon glyphicon-edit"></span></a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row"  id="addEditMovieData">
+  <div  class="col-md-12" *ngIf="isVisible">
+    <app-add-edit-movie [movie]="movieToEdit" (savedNotification)="updateMoviesList($event)"></app-add-edit-movie>
+  </div>
+</div>

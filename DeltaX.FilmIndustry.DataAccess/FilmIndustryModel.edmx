@@ -1,0 +1,424 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FilmIndustryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CrewCastRoles">
+          <Key>
+            <PropertyRef Name="CrewCastRoleId" />
+          </Key>
+          <Property Name="CrewCastRoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Genders">
+          <Key>
+            <PropertyRef Name="GenderID" />
+          </Key>
+          <Property Name="GenderID" Type="int" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Image" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Movies">
+          <Key>
+            <PropertyRef Name="MovieId" />
+          </Key>
+          <Property Name="MovieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="YearOfRelease" Type="int" Nullable="false" />
+          <Property Name="Plot" Type="varchar(max)" Nullable="false" />
+          <Property Name="ImageId" Type="int" />
+          <Property Name="ProducerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MoviesCrewCast">
+          <Key>
+            <PropertyRef Name="CrewCastId" />
+          </Key>
+          <Property Name="CrewCastId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="MovieId" Type="int" Nullable="false" />
+          <Property Name="CrewCastRoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Persons">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="GenderID" Type="int" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="Bio" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_Movies_Images">
+          <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
+          <End Role="Movies" Type="Self.Movies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="Movies">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movies_Persons">
+          <End Role="Persons" Type="Self.Persons" Multiplicity="1" />
+          <End Role="Movies" Type="Self.Movies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Movies">
+              <PropertyRef Name="ProducerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MoviesCrewCast_CrewCastRoles">
+          <End Role="CrewCastRoles" Type="Self.CrewCastRoles" Multiplicity="1" />
+          <End Role="MoviesCrewCast" Type="Self.MoviesCrewCast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CrewCastRoles">
+              <PropertyRef Name="CrewCastRoleId" />
+            </Principal>
+            <Dependent Role="MoviesCrewCast">
+              <PropertyRef Name="CrewCastRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MoviesCrewCast_Movies">
+          <End Role="Movies" Type="Self.Movies" Multiplicity="1" />
+          <End Role="MoviesCrewCast" Type="Self.MoviesCrewCast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="MovieId" />
+            </Principal>
+            <Dependent Role="MoviesCrewCast">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MoviesCrewCast_Persons">
+          <End Role="Persons" Type="Self.Persons" Multiplicity="1" />
+          <End Role="MoviesCrewCast" Type="Self.MoviesCrewCast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="MoviesCrewCast">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Persons_Genders">
+          <End Role="Genders" Type="Self.Genders" Multiplicity="0..1" />
+          <End Role="Persons" Type="Self.Persons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genders">
+              <PropertyRef Name="GenderID" />
+            </Principal>
+            <Dependent Role="Persons">
+              <PropertyRef Name="GenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FilmIndustryModelStoreContainer">
+          <EntitySet Name="CrewCastRoles" EntityType="Self.CrewCastRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genders" EntityType="Self.Genders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movies" EntityType="Self.Movies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MoviesCrewCast" EntityType="Self.MoviesCrewCast" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Persons" EntityType="Self.Persons" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Movies_Images" Association="Self.FK_Movies_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="Movies" EntitySet="Movies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movies_Persons" Association="Self.FK_Movies_Persons">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="Movies" EntitySet="Movies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MoviesCrewCast_CrewCastRoles" Association="Self.FK_MoviesCrewCast_CrewCastRoles">
+            <End Role="CrewCastRoles" EntitySet="CrewCastRoles" />
+            <End Role="MoviesCrewCast" EntitySet="MoviesCrewCast" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MoviesCrewCast_Movies" Association="Self.FK_MoviesCrewCast_Movies">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="MoviesCrewCast" EntitySet="MoviesCrewCast" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MoviesCrewCast_Persons" Association="Self.FK_MoviesCrewCast_Persons">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="MoviesCrewCast" EntitySet="MoviesCrewCast" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Persons_Genders" Association="Self.FK_Persons_Genders">
+            <End Role="Genders" EntitySet="Genders" />
+            <End Role="Persons" EntitySet="Persons" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FilmIndustryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CrewCastRole">
+          <Key>
+            <PropertyRef Name="CrewCastRoleId" />
+          </Key>
+          <Property Name="CrewCastRoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MoviesCrewCasts" Relationship="Self.FK_MoviesCrewCast_CrewCastRoles" FromRole="CrewCastRoles" ToRole="MoviesCrewCast" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="GenderID" />
+          </Key>
+          <Property Name="GenderID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Persons" Relationship="Self.FK_Persons_Genders" FromRole="Genders" ToRole="Persons" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageData" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="Movies" Relationship="Self.FK_Movies_Images" FromRole="Images" ToRole="Movies" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="MovieId" />
+          </Key>
+          <Property Name="MovieId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="YearOfRelease" Type="Int32" Nullable="false" />
+          <Property Name="Plot" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ImageId" Type="Int32" />
+          <Property Name="ProducerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Image" Relationship="Self.FK_Movies_Images" FromRole="Movies" ToRole="Images" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_Movies_Persons" FromRole="Movies" ToRole="Persons" />
+          <NavigationProperty Name="MoviesCrewCasts" Relationship="Self.FK_MoviesCrewCast_Movies" FromRole="Movies" ToRole="MoviesCrewCast" />
+        </EntityType>
+        <EntityType Name="MoviesCrewCast">
+          <Key>
+            <PropertyRef Name="CrewCastId" />
+          </Key>
+          <Property Name="CrewCastId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="MovieId" Type="Int32" Nullable="false" />
+          <Property Name="CrewCastRoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CrewCastRole" Relationship="Self.FK_MoviesCrewCast_CrewCastRoles" FromRole="MoviesCrewCast" ToRole="CrewCastRoles" />
+          <NavigationProperty Name="Movie" Relationship="Self.FK_MoviesCrewCast_Movies" FromRole="MoviesCrewCast" ToRole="Movies" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_MoviesCrewCast_Persons" FromRole="MoviesCrewCast" ToRole="Persons" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GenderID" Type="Int32" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="Bio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Gender" Relationship="Self.FK_Persons_Genders" FromRole="Persons" ToRole="Genders" />
+          <NavigationProperty Name="Movies" Relationship="Self.FK_Movies_Persons" FromRole="Persons" ToRole="Movies" />
+          <NavigationProperty Name="MoviesCrewCasts" Relationship="Self.FK_MoviesCrewCast_Persons" FromRole="Persons" ToRole="MoviesCrewCast" />
+        </EntityType>
+        <Association Name="FK_MoviesCrewCast_CrewCastRoles">
+          <End Role="CrewCastRoles" Type="Self.CrewCastRole" Multiplicity="1" />
+          <End Role="MoviesCrewCast" Type="Self.MoviesCrewCast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CrewCastRoles">
+              <PropertyRef Name="CrewCastRoleId" />
+            </Principal>
+            <Dependent Role="MoviesCrewCast">
+              <PropertyRef Name="CrewCastRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Persons_Genders">
+          <End Role="Genders" Type="Self.Gender" Multiplicity="0..1" />
+          <End Role="Persons" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genders">
+              <PropertyRef Name="GenderID" />
+            </Principal>
+            <Dependent Role="Persons">
+              <PropertyRef Name="GenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movies_Images">
+          <End Role="Images" Type="Self.Image" Multiplicity="0..1" />
+          <End Role="Movies" Type="Self.Movie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="Movies">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movies_Persons">
+          <End Role="Persons" Type="Self.Person" Multiplicity="1" />
+          <End Role="Movies" Type="Self.Movie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Movies">
+              <PropertyRef Name="ProducerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MoviesCrewCast_Movies">
+          <End Role="Movies" Type="Self.Movie" Multiplicity="1" />
+          <End Role="MoviesCrewCast" Type="Self.MoviesCrewCast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="MovieId" />
+            </Principal>
+            <Dependent Role="MoviesCrewCast">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MoviesCrewCast_Persons">
+          <End Role="Persons" Type="Self.Person" Multiplicity="1" />
+          <End Role="MoviesCrewCast" Type="Self.MoviesCrewCast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="MoviesCrewCast">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FilmIndustryDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CrewCastRoles" EntityType="Self.CrewCastRole" />
+          <EntitySet Name="Genders" EntityType="Self.Gender" />
+          <EntitySet Name="Images" EntityType="Self.Image" />
+          <EntitySet Name="Movies" EntityType="Self.Movie" />
+          <EntitySet Name="MoviesCrewCasts" EntityType="Self.MoviesCrewCast" />
+          <EntitySet Name="Persons" EntityType="Self.Person" />
+          <AssociationSet Name="FK_MoviesCrewCast_CrewCastRoles" Association="Self.FK_MoviesCrewCast_CrewCastRoles">
+            <End Role="CrewCastRoles" EntitySet="CrewCastRoles" />
+            <End Role="MoviesCrewCast" EntitySet="MoviesCrewCasts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Persons_Genders" Association="Self.FK_Persons_Genders">
+            <End Role="Genders" EntitySet="Genders" />
+            <End Role="Persons" EntitySet="Persons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movies_Images" Association="Self.FK_Movies_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="Movies" EntitySet="Movies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movies_Persons" Association="Self.FK_Movies_Persons">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="Movies" EntitySet="Movies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MoviesCrewCast_Movies" Association="Self.FK_MoviesCrewCast_Movies">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="MoviesCrewCast" EntitySet="MoviesCrewCasts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MoviesCrewCast_Persons" Association="Self.FK_MoviesCrewCast_Persons">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="MoviesCrewCast" EntitySet="MoviesCrewCasts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FilmIndustryModelStoreContainer" CdmEntityContainer="FilmIndustryDB">
+          <EntitySetMapping Name="CrewCastRoles">
+            <EntityTypeMapping TypeName="FilmIndustryModel.CrewCastRole">
+              <MappingFragment StoreEntitySet="CrewCastRoles">
+                <ScalarProperty Name="CrewCastRoleId" ColumnName="CrewCastRoleId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genders">
+            <EntityTypeMapping TypeName="FilmIndustryModel.Gender">
+              <MappingFragment StoreEntitySet="Genders">
+                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+                <ScalarProperty Name="Name" ColumnName="Gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="FilmIndustryModel.Image">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="ImageData" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movies">
+            <EntityTypeMapping TypeName="FilmIndustryModel.Movie">
+              <MappingFragment StoreEntitySet="Movies">
+                <ScalarProperty Name="MovieId" ColumnName="MovieId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="YearOfRelease" ColumnName="YearOfRelease" />
+                <ScalarProperty Name="Plot" ColumnName="Plot" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="ProducerId" ColumnName="ProducerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MoviesCrewCasts">
+            <EntityTypeMapping TypeName="FilmIndustryModel.MoviesCrewCast">
+              <MappingFragment StoreEntitySet="MoviesCrewCast">
+                <ScalarProperty Name="CrewCastId" ColumnName="CrewCastId" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="MovieId" ColumnName="MovieId" />
+                <ScalarProperty Name="CrewCastRoleId" ColumnName="CrewCastRoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Persons">
+            <EntityTypeMapping TypeName="FilmIndustryModel.Person">
+              <MappingFragment StoreEntitySet="Persons">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Bio" ColumnName="Bio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

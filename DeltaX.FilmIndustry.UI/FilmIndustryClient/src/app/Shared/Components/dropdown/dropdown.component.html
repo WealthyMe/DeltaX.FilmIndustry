@@ -1,0 +1,19 @@
+
+<!--<div class="dropdown width90px">
+  <button class="btn {{dropdownClass == null ? dropdownClass : 'btn-primary'}} dropdown-toggle" type="button" data-toggle="dropdown">
+    {{selectedDropdown != null ? selectedDropdown.value : 'Select..'}}
+  </button>
+  <ul class="dropdown-menu">
+    <li *ngFor="let ddl of dropdownValues;">
+      <a href="javascript:void(0)" (click)="notifySelectedDropdown(ddl.id)">{{ddl.value}}</a>
+    </li>
+  </ul>
+</div>-->
+<div ngbDropdown class="d-inline-block">
+  <button type="button" class="btn btn-lg btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+    {{selectedDropdown != null ? selectedDropdown.value : 'Select..'}}
+  </button>
+  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+    <a href="javascript:void(0)" *ngFor="let ddl of dropdownValues;" (click)="notifySelectedDropdown(ddl.id)" class="dropdown-item">{{ddl.value}}</a>
+  </div>
+</div>

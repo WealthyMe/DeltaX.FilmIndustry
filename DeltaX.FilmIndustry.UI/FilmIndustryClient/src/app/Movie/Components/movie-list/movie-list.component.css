@@ -1,0 +1,16 @@
+table {
+  border-collapse: collapse;
+  min-width: 100%;
+  margin-top: 25px;
+}
+
+td, th {
+  border: 2px solid black;
+  min-width: 50px;
+  text-align: center;
+  padding: 5px;
+}
+
+.maxWidth250px{
+  max-width:250px;
+}

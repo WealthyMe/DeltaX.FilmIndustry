@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d9ab32cacc454a2d8e5eee7bb40ef580" Name="Diagram1">
+        <EntityTypeShape EntityType="FilmIndustryModel.CrewCastRole" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmIndustryModel.Gender" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmIndustryModel.Image" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmIndustryModel.Movie" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmIndustryModel.MoviesCrewCast" Width="1.5" PointX="7.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmIndustryModel.Person" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="FilmIndustryModel.FK_MoviesCrewCast_CrewCastRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="FilmIndustryModel.FK_Persons_Genders" ManuallyRouted="false" />
+        <AssociationConnector Association="FilmIndustryModel.FK_Movies_Images" ManuallyRouted="false" />
+        <AssociationConnector Association="FilmIndustryModel.FK_Movies_Persons" ManuallyRouted="false" />
+        <AssociationConnector Association="FilmIndustryModel.FK_MoviesCrewCast_Movies" ManuallyRouted="false" />
+        <AssociationConnector Association="FilmIndustryModel.FK_MoviesCrewCast_Persons" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
